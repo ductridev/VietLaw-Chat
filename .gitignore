@@ -1,0 +1,160 @@
+# =========================================================
+# VietLaw-Chat MVP .gitignore
+# Root-level ignore rules for FastAPI backend + Vite frontend
+# =========================================================
+
+
+# ---------------------------------------------------------
+# OS / editor noise
+# ---------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+
+.idea/
+*.swp
+*.swo
+
+
+# ---------------------------------------------------------
+# Environment / secrets
+# ---------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+secrets/
+*.secret
+
+
+# ---------------------------------------------------------
+# Python backend
+# ---------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+venv/
+env/
+ENV/
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+.ipynb_checkpoints/
+
+
+# ---------------------------------------------------------
+# FastAPI / backend runtime files
+# ---------------------------------------------------------
+*.log
+logs/
+
+# SQLite runtime databases for chat/session storage
+*.db
+*.sqlite
+*.sqlite3
+
+# Keep curated JSON data committed:
+# data/legal_snippets.json
+# data/demo_cases.json
+# data/golden_cases.json
+# data/unsafe_patterns.json
+
+
+# ---------------------------------------------------------
+# Node / Vite frontend
+# ---------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+web/node_modules/
+web/dist/
+web/build/
+web/.vite/
+
+.next/
+.nuxt/
+
+
+# ---------------------------------------------------------
+# TypeScript / frontend cache
+# ---------------------------------------------------------
+*.tsbuildinfo
+
+
+# ---------------------------------------------------------
+# Test / coverage output
+# ---------------------------------------------------------
+coverage/
+test-results/
+playwright-report/
+blob-report/
+
+
+# ---------------------------------------------------------
+# Local generated artifacts
+# ---------------------------------------------------------
+tmp/
+temp/
+.cache/
+artifacts/
+generated/
+
+# Ignore generated outputs by default, but allow the curated eval report.
+outputs/*
+!outputs/
+!outputs/eval_report.json
+!outputs/README.md
+
+
+# ---------------------------------------------------------
+# Local uploads / demo recordings
+# ---------------------------------------------------------
+uploads/
+recordings/
+
+*.mp4
+*.mov
+*.webm
+
+# Allow intentional small demo videos in repo.
+!demo/
+!demo/*.mp4
+!demo/README.md
+
+
+# ---------------------------------------------------------
+# Package / lock files policy
+# ---------------------------------------------------------
+# Keep lock files committed for reproducible installs.
+# Do NOT ignore:
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
+# requirements.txt

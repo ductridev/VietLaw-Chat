@@ -1,0 +1,636 @@
+[
+  {
+    "id": "civil_deposit_001",
+    "domain": "civil_dispute",
+    "title": "Đặt cọc để bảo đảm giao kết hoặc thực hiện hợp đồng",
+    "source_name": "Bộ luật Dân sự 2015 - Điều 328",
+    "source_url": "https://vbpl.moj.gov.vn/tuyenquang/Pages/vbpq-toanvan.aspx?ItemID=95942&Keyword=",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Đặt cọc là việc một bên giao cho bên kia một khoản tiền hoặc tài sản có giá trị trong một thời hạn để bảo đảm giao kết hoặc thực hiện hợp đồng. Khi có tranh chấp tiền cọc, cần xem thỏa thuận đặt cọc, điều kiện hoàn trả hoặc mất cọc và việc các bên có thực hiện đúng cam kết hay không.",
+    "plain_language_summary": "Nếu bị giữ tiền cọc, người dùng cần kiểm tra thỏa thuận đặt cọc, hợp đồng, chứng từ thanh toán và điều kiện mất hoặc hoàn cọc.",
+    "tags": [
+      "dat_coc",
+      "tien_coc",
+      "hop_dong",
+      "chu_nha_giu_coc",
+      "thue_nha",
+      "dan_su",
+      "tranh_chap_tien"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "money_dispute",
+      "ask_for_contract_and_payment_proof"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "civil_contract_001",
+    "domain": "civil_dispute",
+    "title": "Nội dung cơ bản của hợp đồng",
+    "source_name": "Bộ luật Dân sự 2015 - Điều 398",
+    "source_url": "https://vbpl.moj.gov.vn/tuyenquang/Pages/vbpq-toanvan.aspx?ItemID=95942&Keyword=",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Hợp đồng thường thể hiện các nội dung như đối tượng, giá, phương thức thanh toán, thời hạn, địa điểm, phương thức thực hiện, quyền và nghĩa vụ của các bên, trách nhiệm do vi phạm và phương thức giải quyết tranh chấp.",
+    "plain_language_summary": "Khi có tranh chấp hợp đồng, nên chuẩn bị bản hợp đồng và kiểm tra các điều khoản về giá, thanh toán, thời hạn, nghĩa vụ và cách giải quyết tranh chấp.",
+    "tags": [
+      "hop_dong",
+      "noi_dung_hop_dong",
+      "nghia_vu",
+      "thanh_toan",
+      "thoi_han",
+      "tranh_chap_hop_dong",
+      "dan_su"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "contract_dispute"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "civil_contract_002",
+    "domain": "civil_dispute",
+    "title": "Hiệu lực và thực hiện hợp đồng",
+    "source_name": "Bộ luật Dân sự 2015 - Quy định chung về hợp đồng",
+    "source_url": "https://vbpl.moj.gov.vn/tuyenquang/Pages/vbpq-toanvan.aspx?ItemID=95942&Keyword=",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Hợp đồng được giao kết hợp pháp có hiệu lực từ thời điểm giao kết, trừ khi các bên có thỏa thuận khác hoặc luật liên quan có quy định khác. Từ thời điểm có hiệu lực, các bên phải thực hiện quyền và nghĩa vụ theo cam kết.",
+    "plain_language_summary": "Khi hỏi về việc một bên không thực hiện cam kết, cần xem hợp đồng đã có hiệu lực chưa và nghĩa vụ cụ thể của từng bên là gì.",
+    "tags": [
+      "hieu_luc_hop_dong",
+      "thuc_hien_hop_dong",
+      "nghia_vu_hop_dong",
+      "vi_pham_hop_dong",
+      "dan_su"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "ask_for_contract_terms"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "civil_rental_001",
+    "domain": "civil_dispute",
+    "title": "Checklist khi tranh chấp thuê nhà hoặc tiền cọc",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Khi tranh chấp thuê nhà hoặc tiền cọc, người dùng nên chuẩn bị hợp đồng thuê nhà, thỏa thuận đặt cọc, chứng từ chuyển khoản hoặc biên nhận, tin nhắn/email trao đổi, ảnh/video hiện trạng nếu có và timeline sự việc.",
+    "plain_language_summary": "Đây là checklist chứng cứ cơ bản cho tình huống chủ nhà giữ cọc hoặc tranh chấp thuê nhà.",
+    "tags": [
+      "thue_nha",
+      "chu_nha",
+      "giu_coc",
+      "tien_coc",
+      "hop_dong_thue_nha",
+      "chung_tu",
+      "tin_nhan",
+      "timeline"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "evidence_checklist"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "civil_loan_001",
+    "domain": "civil_dispute",
+    "title": "Checklist khi vay mượn tiền không trả",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Khi có tranh chấp vay mượn tiền, người dùng nên chuẩn bị giấy vay tiền nếu có, chứng từ chuyển khoản, tin nhắn/email xác nhận khoản vay, thời hạn trả nợ, số tiền còn nợ và các lần đã yêu cầu trả.",
+    "plain_language_summary": "Không nên đe dọa hoặc tự ý giữ tài sản. Nên chuẩn bị chứng cứ và tìm hướng xử lý hợp pháp.",
+    "tags": [
+      "vay_tien",
+      "no_tien",
+      "khong_tra_no",
+      "chung_tu_chuyen_khoan",
+      "tin_nhan",
+      "giay_vay_tien",
+      "dan_su"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "money_dispute",
+      "do_not_threaten"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "civil_consumer_001",
+    "domain": "civil_dispute",
+    "title": "Checklist khi mua hàng online nhưng không nhận được hàng",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Khi mua hàng online nhưng không nhận được hàng, người dùng nên chuẩn bị mã đơn hàng, chứng từ thanh toán, tin nhắn với người bán, thông tin nền tảng giao dịch, chính sách hoàn tiền/khiếu nại của nền tảng và timeline sự việc.",
+    "plain_language_summary": "Nên liên hệ người bán hoặc nền tảng theo kênh chính thức, không đe dọa hoặc công khai thông tin cá nhân của người khác.",
+    "tags": [
+      "mua_hang_online",
+      "shop_khong_giao_hang",
+      "don_hang",
+      "chung_tu_thanh_toan",
+      "khieu_nai",
+      "nguoi_tieu_dung"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "consumer_dispute"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "traffic_law_001",
+    "domain": "traffic",
+    "title": "Luật Trật tự, an toàn giao thông đường bộ",
+    "source_name": "Cổng thông tin điện tử Chính phủ - Luật số 36/2024/QH15",
+    "source_url": "https://chinhphu.vn/?classid=1&docid=211194&orggroupid=1&pageid=27160",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Luật Trật tự, an toàn giao thông đường bộ quy định về quy tắc, phương tiện, người tham gia giao thông đường bộ, tuần tra, kiểm soát và giải quyết tai nạn giao thông đường bộ.",
+    "plain_language_summary": "Với câu hỏi về biên bản, giấy phạt hoặc vi phạm giao thông, cần xem thông tin cụ thể trên giấy tờ và các quy định liên quan.",
+    "tags": [
+      "giao_thong",
+      "luat_giao_thong",
+      "bien_ban",
+      "giay_phat",
+      "vi_pham_giao_thong",
+      "canh_sat_giao_thong"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "ask_for_violation_record"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "traffic_fine_001",
+    "domain": "traffic",
+    "title": "Checklist khi không hiểu lỗi trong biên bản giao thông",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Khi người dùng không hiểu lỗi ghi trong biên bản giao thông, cần yêu cầu họ cung cấp nội dung lỗi, thời gian, địa điểm, hành vi bị ghi nhận, giấy tờ liên quan và mong muốn của họ là hiểu lỗi, chuẩn bị giấy tờ hay xác minh/khiếu nại.",
+    "plain_language_summary": "Không nên kết luận giấy phạt đúng hay sai nếu chưa có nội dung biên bản.",
+    "tags": [
+      "phat_giao_thong",
+      "bien_ban_giao_thong",
+      "khong_hieu_loi",
+      "giay_phat",
+      "khieu_nai",
+      "xac_minh"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "missing_document_content"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "traffic_documents_001",
+    "domain": "traffic",
+    "title": "Giấy tờ nên chuẩn bị khi làm việc về vi phạm giao thông",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Người dùng nên chuẩn bị biên bản hoặc giấy phạt, giấy phép lái xe, giấy đăng ký xe, giấy tờ cá nhân, bảo hiểm trách nhiệm dân sự nếu có liên quan và ảnh/video hoặc thông tin sự việc nếu có.",
+    "plain_language_summary": "Checklist giấy tờ giúp người dùng hỏi lại hoặc làm việc với cơ quan chức năng theo hướng hợp pháp.",
+    "tags": [
+      "giay_phep_lai_xe",
+      "dang_ky_xe",
+      "bao_hiem",
+      "bien_ban",
+      "giay_phat",
+      "giay_to_xe"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "document_checklist"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "traffic_accident_001",
+    "domain": "high_risk",
+    "title": "Tai nạn giao thông có người bị thương hoặc dấu hiệu nghiêm trọng",
+    "source_name": "Cổng thông tin điện tử Chính phủ - Luật số 36/2024/QH15",
+    "source_url": "https://chinhphu.vn/?classid=1&docid=211194&orggroupid=1&pageid=27160",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Với tai nạn giao thông có hậu quả về người, tài sản hoặc có dấu hiệu tội phạm, việc xử lý có thể liên quan đến cơ quan chức năng và quy trình điều tra, xác minh. Hệ thống không nên hướng dẫn trốn tránh trách nhiệm hoặc rời khỏi hiện trường.",
+    "plain_language_summary": "Nếu tai nạn có người bị thương, tử vong hoặc thiệt hại nghiêm trọng, cần đánh dấu rủi ro cao và khuyến nghị liên hệ luật sư/cơ quan chức năng.",
+    "tags": [
+      "tai_nan_giao_thong",
+      "nguoi_bi_thuong",
+      "tai_nan_nghiem_trong",
+      "co_quan_chuc_nang",
+      "high_risk",
+      "luat_su"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "requires_escalation",
+      "do_not_evade"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "traffic_safety_001",
+    "domain": "high_risk",
+    "title": "Không hỗ trợ né phạt hoặc khai gian trong vi phạm giao thông",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu người dùng hỏi cách né phạt, khai gian, xóa bằng chứng hoặc đối phó sai trái với cơ quan chức năng, hệ thống phải từ chối và chuyển sang hướng hợp pháp như kiểm tra nội dung biên bản, chuẩn bị giấy tờ và hỏi lại cơ quan có thẩm quyền.",
+    "plain_language_summary": "Safety note cho các yêu cầu né phạt giao thông.",
+    "tags": [
+      "ne_phat",
+      "khai_gian",
+      "doi_pho",
+      "giao_thong",
+      "refuse_unsafe_request",
+      "high_risk"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "unsafe_request",
+      "must_refuse"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_registration_001",
+    "domain": "household_business",
+    "title": "Đăng ký thành lập hộ kinh doanh",
+    "source_name": "Cổng Dịch vụ công Quốc gia",
+    "source_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-chi-tiet-thu-tuc-nganh-doc.html?ma_thu_tuc=1.001612",
+    "source_type": "procedure",
+    "status": "active",
+    "text": "Người thành lập hộ kinh doanh thực hiện đăng ký hộ kinh doanh tại cơ quan đăng ký kinh doanh cấp xã nơi đặt trụ sở hộ kinh doanh. Cơ quan xử lý cấp giấy chứng nhận khi hồ sơ hợp lệ và đáp ứng điều kiện theo thủ tục.",
+    "plain_language_summary": "Người muốn mở hộ kinh doanh cần xác định địa điểm, ngành nghề, thông tin chủ hộ và kiểm tra thủ tục tại địa phương.",
+    "tags": [
+      "ho_kinh_doanh",
+      "dang_ky_ho_kinh_doanh",
+      "dang_ky_kinh_doanh",
+      "co_quan_cap_xa",
+      "thu_tuc_hanh_chinh"
+    ],
+    "risk_notes": [
+      "low_risk",
+      "procedure_checklist"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_registration_002",
+    "domain": "household_business",
+    "title": "Điều kiện cấp giấy chứng nhận đăng ký hộ kinh doanh",
+    "source_name": "Cổng Dịch vụ công Quốc gia",
+    "source_url": "https://vpcp.dichvucong.gov.vn/p/home/dvc-chi-tiet-thu-tuc-nganh-doc.html?ma_thu_tuc=1.001612",
+    "source_type": "procedure",
+    "status": "active",
+    "text": "Hộ kinh doanh được cấp giấy chứng nhận đăng ký khi ngành nghề đăng ký không bị cấm đầu tư kinh doanh, tên hộ kinh doanh phù hợp quy định, hồ sơ đăng ký hợp lệ và nộp đủ lệ phí theo quy định.",
+    "plain_language_summary": "Không nên nói người dùng cứ bán trước hoặc không cần đăng ký. Cần hướng dẫn họ kiểm tra ngành nghề, tên hộ kinh doanh, hồ sơ và lệ phí.",
+    "tags": [
+      "dieu_kien_dang_ky",
+      "nganh_nghe_kinh_doanh",
+      "ho_so_hop_le",
+      "le_phi",
+      "ho_kinh_doanh"
+    ],
+    "risk_notes": [
+      "low_risk",
+      "do_not_bypass_registration"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_registration_003",
+    "domain": "household_business",
+    "title": "Thời hạn xử lý thủ tục đăng ký hộ kinh doanh",
+    "source_name": "Cổng Dịch vụ công Quốc gia - Tra cứu thủ tục hành chính",
+    "source_url": "https://thutuc.dichvucong.gov.vn/p/home/dvc-tthc-thu-tuc-hanh-chinh-chi-tiet.html?ma_thu_tuc=133057",
+    "source_type": "procedure",
+    "status": "active",
+    "text": "Trang thủ tục hành chính về đăng ký thành lập hộ kinh doanh nêu thời hạn giải quyết là 3 ngày làm việc trong các hình thức nộp hồ sơ được liệt kê trên cổng dịch vụ công.",
+    "plain_language_summary": "Có thể dùng thông tin này để nói người dùng nên kiểm tra thủ tục, hình thức nộp và thời hạn xử lý trên cổng dịch vụ công hoặc tại địa phương.",
+    "tags": [
+      "thoi_han_giai_quyet",
+      "3_ngay_lam_viec",
+      "nop_ho_so",
+      "ho_kinh_doanh",
+      "dich_vu_cong"
+    ],
+    "risk_notes": [
+      "low_risk",
+      "procedure"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_food_001",
+    "domain": "household_business",
+    "title": "Điều kiện bảo đảm an toàn thực phẩm trong sản xuất, kinh doanh",
+    "source_name": "Luật An toàn thực phẩm 2010",
+    "source_url": "https://vbpl.vn/boyte/Pages/vbpq-toanvan.aspx?ItemID=25495",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Luật An toàn thực phẩm quy định quyền, nghĩa vụ và điều kiện bảo đảm an toàn thực phẩm đối với tổ chức, cá nhân trong sản xuất, kinh doanh thực phẩm. Kinh doanh thực phẩm có thể phải đáp ứng điều kiện riêng tùy loại hình, quy mô và địa phương.",
+    "plain_language_summary": "Nếu người dùng bán đồ ăn online, cần hỏi thêm loại thực phẩm, nơi bán, quy mô và khuyến nghị kiểm tra yêu cầu an toàn thực phẩm tại địa phương.",
+    "tags": [
+      "an_toan_thuc_pham",
+      "ban_do_an_online",
+      "kinh_doanh_thuc_pham",
+      "ho_kinh_doanh",
+      "dieu_kien_kinh_doanh"
+    ],
+    "risk_notes": [
+      "low_risk",
+      "regulated_business",
+      "ask_food_type_and_location"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_food_002",
+    "domain": "household_business",
+    "title": "Kinh doanh thực phẩm nhỏ lẻ cần kiểm tra quy định cụ thể",
+    "source_name": "Luật An toàn thực phẩm 2010",
+    "source_url": "https://vbpl.vn/boyte/Pages/vbpq-toanvan.aspx?ItemID=25495",
+    "source_type": "official_source",
+    "status": "active",
+    "text": "Quy định về điều kiện bảo đảm an toàn thực phẩm trong sản xuất, kinh doanh thực phẩm nhỏ lẻ có thể do cơ quan có thẩm quyền quy định cụ thể theo lĩnh vực và địa phương.",
+    "plain_language_summary": "Không nên trả lời chắc rằng bán đồ ăn online có hoặc không cần giấy phép nếu chưa biết loại thực phẩm, quy mô, địa điểm và quy định địa phương.",
+    "tags": [
+      "kinh_doanh_nho_le",
+      "thuc_pham_nho_le",
+      "an_toan_thuc_pham",
+      "dia_phuong",
+      "ban_do_an_online"
+    ],
+    "risk_notes": [
+      "medium_risk",
+      "local_requirements",
+      "avoid_overclaim"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_checklist_001",
+    "domain": "household_business",
+    "title": "Checklist ban đầu khi mở hộ kinh doanh nhỏ",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Người dùng nên chuẩn bị thông tin cá nhân của chủ hộ kinh doanh, địa điểm kinh doanh, ngành nghề kinh doanh, quy mô hoạt động, tên hộ kinh doanh dự kiến và thông tin liên hệ với cơ quan địa phương.",
+    "plain_language_summary": "Checklist này dùng cho câu hỏi mở hộ kinh doanh nhỏ hoặc bán hàng online.",
+    "tags": [
+      "mo_ho_kinh_doanh",
+      "checklist_ho_kinh_doanh",
+      "dia_diem_kinh_doanh",
+      "nganh_nghe",
+      "giay_to_ca_nhan"
+    ],
+    "risk_notes": [
+      "low_risk",
+      "checklist"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "business_safety_001",
+    "domain": "high_risk",
+    "title": "Không hỗ trợ lách giấy phép hoặc khai sai khi kinh doanh",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu người dùng hỏi cách lách giấy phép, khai sai, trốn thuế, né kiểm tra hoặc bán trước đăng ký sau theo hướng vi phạm, hệ thống phải từ chối và chuyển sang checklist đăng ký hợp pháp.",
+    "plain_language_summary": "Safety note cho yêu cầu lách luật trong kinh doanh nhỏ.",
+    "tags": [
+      "lach_giay_phep",
+      "khai_sai",
+      "tron_thue",
+      "ne_kiem_tra",
+      "kinh_doanh",
+      "refuse_unsafe_request"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "unsafe_request",
+      "must_refuse"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "high_risk_police_001",
+    "domain": "high_risk",
+    "title": "Bị công an mời làm việc là tình huống rủi ro cao",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Khi người dùng nói bị công an mời làm việc, bị điều tra, bị tố cáo hình sự hoặc hỏi cách khai để không bị tội, hệ thống phải đánh dấu rủi ro cao, không hướng dẫn chiến thuật khai báo và khuyến nghị liên hệ luật sư hoặc người có chuyên môn.",
+    "plain_language_summary": "Hệ thống chỉ nên hỗ trợ checklist giấy tờ, timeline sự việc và câu hỏi cần hỏi luật sư.",
+    "tags": [
+      "cong_an",
+      "bi_moi_lam_viec",
+      "khai_gi_de_khong_bi_toi",
+      "hinh_su",
+      "luat_su",
+      "high_risk"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "requires_escalation",
+      "no_tactical_legal_advice"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "high_risk_evidence_001",
+    "domain": "high_risk",
+    "title": "Không hỗ trợ giấu hoặc xóa chứng cứ",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu người dùng hỏi cách giấu chứng cứ, xóa tin nhắn, tiêu hủy tài liệu hoặc làm sai lệch thông tin, hệ thống phải từ chối và khuyến nghị giữ nguyên tài liệu hợp pháp, chuẩn bị timeline và hỏi luật sư/cơ quan chức năng.",
+    "plain_language_summary": "Yêu cầu giấu, xóa hoặc tiêu hủy chứng cứ phải bị từ chối.",
+    "tags": [
+      "giau_chung_cu",
+      "xoa_chung_cu",
+      "xoa_tin_nhan",
+      "tieu_huy_chung_cu",
+      "refuse_unsafe_request",
+      "high_risk"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "must_refuse",
+      "evidence_hiding"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "high_risk_fake_docs_001",
+    "domain": "high_risk",
+    "title": "Không hỗ trợ làm giả giấy tờ",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu người dùng hỏi cách làm giả giấy tờ, giả chữ ký, sửa giấy tờ hoặc khai gian hồ sơ, hệ thống phải từ chối và chuyển sang hướng chuẩn bị hồ sơ hợp pháp.",
+    "plain_language_summary": "Yêu cầu làm giả giấy tờ phải bị từ chối.",
+    "tags": [
+      "lam_gia_giay_to",
+      "gia_chu_ky",
+      "khai_gian",
+      "sua_giay_to",
+      "refuse_unsafe_request",
+      "high_risk"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "must_refuse",
+      "fake_documents"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "high_risk_threat_001",
+    "domain": "high_risk",
+    "title": "Bị đe dọa hoặc có nguy cơ bạo lực",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu người dùng bị đe dọa, uy hiếp, cưỡng ép, bị dọa đánh hoặc có nguy cơ bạo lực, hệ thống phải ưu tiên an toàn cá nhân, không khuyến khích tự xử và khuyến nghị liên hệ cơ quan chức năng hoặc luật sư.",
+    "plain_language_summary": "Các tình huống có đe dọa hoặc bạo lực cần escalation.",
+    "tags": [
+      "bi_de_doa",
+      "de_doa_danh",
+      "bao_luc",
+      "uy_hiep",
+      "cuong_ep",
+      "co_quan_chuc_nang",
+      "high_risk"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "requires_escalation",
+      "personal_safety"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "high_risk_debt_001",
+    "domain": "high_risk",
+    "title": "Không hỗ trợ đòi nợ bằng đe dọa hoặc cưỡng ép",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu người dùng hỏi cách đe dọa, cưỡng ép, giữ tài sản, thuê người đòi nợ hoặc bêu xấu người khác để đòi tiền, hệ thống phải từ chối và chuyển sang hướng chuẩn bị chứng cứ, thương lượng hợp pháp hoặc hỏi luật sư/cơ quan chức năng.",
+    "plain_language_summary": "Không hỗ trợ tự xử hoặc đe dọa trong tranh chấp nợ.",
+    "tags": [
+      "doi_no",
+      "de_doa_doi_no",
+      "giu_tai_san",
+      "thue_nguoi_doi_no",
+      "boi_nho",
+      "refuse_unsafe_request"
+    ],
+    "risk_notes": [
+      "high_risk",
+      "must_refuse",
+      "coercion"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "general_no_source_001",
+    "domain": "unknown",
+    "title": "Không có nguồn phù hợp thì phải trả lời thận trọng",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu RAG không tìm thấy nguồn phù hợp, hệ thống không được đưa kết luận pháp lý mạnh. Hệ thống nên hỏi thêm thông tin, nêu giới hạn của bản demo và khuyến nghị kiểm tra với luật sư hoặc cơ quan chức năng nếu vụ việc quan trọng.",
+    "plain_language_summary": "No-source behavior cho Citation Guard.",
+    "tags": [
+      "no_source",
+      "khong_co_nguon",
+      "hoi_them",
+      "can_trong",
+      "citation_guard",
+      "unknown"
+    ],
+    "risk_notes": [
+      "avoid_overclaim",
+      "ask_clarifying_questions"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "general_privacy_001",
+    "domain": "unknown",
+    "title": "Không yêu cầu thông tin cá nhân nhạy cảm trong bản demo",
+    "source_name": "VietLaw Guide Safety Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Trong bản demo, hệ thống không nên yêu cầu người dùng nhập số CCCD, tài khoản ngân hàng, địa chỉ cụ thể, số điện thoại hoặc thông tin cá nhân nhạy cảm nếu không cần thiết.",
+    "plain_language_summary": "Privacy note cho UI và chatbot.",
+    "tags": [
+      "privacy",
+      "du_lieu_ca_nhan",
+      "cccd",
+      "tai_khoan_ngan_hang",
+      "dia_chi",
+      "ban_demo"
+    ],
+    "risk_notes": [
+      "privacy",
+      "demo_safety"
+    ],
+    "last_checked": "2026-07-10"
+  },
+  {
+    "id": "general_unsupported_001",
+    "domain": "unknown",
+    "title": "Câu hỏi ngoài phạm vi bản demo",
+    "source_name": "VietLaw Guide Curated Note",
+    "source_url": "",
+    "source_type": "curated_note",
+    "status": "active",
+    "text": "Nếu câu hỏi không liên quan pháp lý hoặc nằm ngoài phạm vi MVP, hệ thống nên trả lời rằng bản demo hiện tập trung vào định hướng pháp lý ban đầu cho tranh chấp dân sự đời thường, giao thông và hộ kinh doanh nhỏ.",
+    "plain_language_summary": "Unsupported behavior cho câu hỏi không liên quan.",
+    "tags": [
+      "unsupported",
+      "ngoai_pham_vi",
+      "khong_phap_ly",
+      "unknown",
+      "ban_demo"
+    ],
+    "risk_notes": [
+      "low_risk",
+      "unsupported"
+    ],
+    "last_checked": "2026-07-10"
+  }
+]

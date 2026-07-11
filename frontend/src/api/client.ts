@@ -66,12 +66,17 @@ export function listChats(sessionId: string): Promise<ChatListResponse> {
   return request(`/api/chats?session_id=${encodeURIComponent(sessionId)}`);
 }
 
-export function getChat(chatId: string): Promise<ChatDetailResponse> {
-  return request(`/api/chats/${encodeURIComponent(chatId)}`);
+export function getChat(chatId: string, sessionId: string): Promise<ChatDetailResponse> {
+  return request(
+    `/api/chats/${encodeURIComponent(chatId)}?session_id=${encodeURIComponent(sessionId)}`,
+  );
 }
 
-export function deleteChat(chatId: string): Promise<DeleteChatResponse> {
-  return request(`/api/chats/${encodeURIComponent(chatId)}`, { method: 'DELETE' });
+export function deleteChat(chatId: string, sessionId: string): Promise<DeleteChatResponse> {
+  return request(
+    `/api/chats/${encodeURIComponent(chatId)}?session_id=${encodeURIComponent(sessionId)}`,
+    { method: 'DELETE' },
+  );
 }
 
 export function getHealth(): Promise<unknown> {

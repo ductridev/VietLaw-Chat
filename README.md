@@ -269,8 +269,8 @@ Frontend Chat UI
 | `POST` | `/api/analyze` | yes | Send user message, run AI Core/RAG/safety, return structured assistant response |
 | `POST` | `/api/chats` | yes | Create a new chat thread |
 | `GET` | `/api/chats?session_id=...` | yes | List chats for current browser/demo session |
-| `GET` | `/api/chats/{chat_id}` | yes | Load one chat thread and messages |
-| `DELETE` | `/api/chats/{chat_id}` | optional | Soft-delete one chat thread |
+| `GET` | `/api/chats/{chat_id}?session_id=...` | yes | Load one chat after session ownership validation |
+| `DELETE` | `/api/chats/{chat_id}?session_id=...` | optional | Soft-delete after session ownership validation |
 
 ### Analyze Request
 
@@ -406,7 +406,7 @@ messages
 - A follow-up question must reuse the same `chat_id`.
 - AI Core may use current-chat history to understand follow-up questions.
 - AI Core must not use messages from other chats by default.
-- Messages returned by `GET /api/chats/{chat_id}` must be sorted ascending by `created_at`; if timestamps tie, sort by `message_id`.
+- Messages returned by session-scoped `GET /api/chats/{chat_id}?session_id=...` must be sorted ascending by `created_at`; if timestamps tie, sort by `message_id`.
 
 ---
 
@@ -624,7 +624,24 @@ If snippets are later grouped by folder, compiler should use `rglob("*.md")`, fo
 
 ## 12. Backend Setup
 
-From repository root:
+This repository may contain two independent implementations:
+
+- `backend/`: production backend, expected on port 8000;
+- `backend_lite/`: deterministic reference backend for UI/UX and contract testing, expected on port 8010.
+
+To run Backend Lite from the repository root:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r backend_lite/requirements.txt
+.venv/bin/python -m uvicorn backend_lite.app.main:app --host 127.0.0.1 --port 8010
+```
+
+Backend Lite is intentionally independent and must not import or overwrite the production backend. See `backend_lite/README.md` for its test, environment and limitation details.
+
+### Production backend
+
+From repository root, when the production implementation is available:
 
 ```bash
 cd backend
@@ -660,9 +677,9 @@ curl -X POST http://localhost:8000/api/analyze \
 From repository root:
 
 ```bash
-cd web
+cd frontend
 npm install
-npm run dev
+VITE_API_BASE_URL=http://127.0.0.1:8010 npm run dev
 ```
 
 Default frontend URL:
@@ -675,6 +692,7 @@ Frontend rules:
 
 - create a stable `session_id` and store it in `localStorage`;
 - send `session_id` with every analyze request;
+- send `session_id` when loading or deleting one chat;
 - store returned `chat_id` as the current chat id;
 - send `chat_id` for follow-up questions;
 - render user messages with `content_type: text`;
@@ -755,6 +773,12 @@ data/vietlaw_chat.sqlite3
 ```bash
 cd backend
 pytest
+```
+
+Backend Lite tests are independent:
+
+```bash
+python3 -m pytest backend_lite/tests -q
 ```
 
 Minimum backend tests:

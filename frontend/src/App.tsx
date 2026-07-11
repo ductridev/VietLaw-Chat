@@ -106,7 +106,7 @@ export function App() {
     setLoadingChat(true);
     setError(null);
     try {
-      const response = await getChat(chatId);
+      const response = await getChat(chatId, sessionId);
       setActiveChatId(response.chat_id);
       setMessages(response.messages);
     } catch (caughtError) {
@@ -114,7 +114,7 @@ export function App() {
     } finally {
       setLoadingChat(false);
     }
-  }, [activeChatId, loadingChat, sending]);
+  }, [activeChatId, loadingChat, sending, sessionId]);
 
   function startNewChat() {
     if (sending || loadingChat) return;

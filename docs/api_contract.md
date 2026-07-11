@@ -119,8 +119,8 @@ These endpoints are required if the UI shows a chat sidebar or allows opening pr
 | -------- | --------------------------: | -------: | ------------------------------------------------------ |
 | `POST`   |                `/api/chats` |      yes | Create a new chat thread                               |
 | `GET`    | `/api/chats?session_id=...` |      yes | List chat threads for the current demo/browser session |
-| `GET`    |      `/api/chats/{chat_id}` |      yes | Load messages in a chat thread                         |
-| `DELETE` |      `/api/chats/{chat_id}` | optional | Delete or hide a chat thread                           |
+| `GET`    | `/api/chats/{chat_id}?session_id=...` | yes | Load messages after session ownership validation |
+| `DELETE` | `/api/chats/{chat_id}?session_id=...` | optional | Soft-delete after session ownership validation |
 
 Implementation order:
 
@@ -183,18 +183,22 @@ The backend must return exactly one decision.
 | Field                  |                                                 Required |         Nullable | Meaning                                                                                                                                              |
 | ---------------------- | -------------------------------------------------------: | ---------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `request_id`           |                                                      yes |               no | Unique id for one API request                                                                                                                        |
-| `session_id`           | yes for chat listing; conditionally required for analyze | no when provided | Demo/browser session id. MVP has no login, so this groups chats by browser/demo session. Required for `POST /api/analyze` when `chat_id` is omitted. |
+| `session_id`           | yes for analyze and every session-scoped chat operation | no | Demo/browser session id. Required on analyze, chat detail, deletion, and chat listing in the no-login MVP. |
 | `chat_id`              |                            yes in every analyze response |               no | Unique id for one chat thread/legal issue discussion                                                                                                 |
 | `user_message_id`      |                                                      yes |               no | Unique id for the stored user message                                                                                                                |
 | `assistant_message_id` |                                                      yes |               no | Unique id for the stored assistant message                                                                                                           |
 
 Rules:
 
-1. If `POST /api/analyze` request omits `chat_id`, the request must include `session_id`; backend must create a new `chat_id` linked to that `session_id` and return it.
+1. Every `POST /api/analyze` request must include `session_id`. If it omits `chat_id`, backend creates a new `chat_id` linked to that session.
 2. `chat_id` in the response must never be `null`.
 3. Backend must always generate `user_message_id` and `assistant_message_id` for a successful analyze response.
 4. `user_message_id` and `assistant_message_id` must never be `null`.
 5. Frontend must store the returned `chat_id` from the first response and reuse it for follow-up messages in the same chat.
+
+### 8.1. Security Amendment: Session Ownership
+
+In the no-login MVP, `session_id` is required for analyze, chat detail, and chat deletion. `chat_id` is not treated as an authorization credential. A chat that does not exist, is deleted, or belongs to another session must produce the same `chat_not_found` response without revealing its owner session.
 
 ---
 
@@ -290,15 +294,15 @@ It can also be used by the evaluation script. For eval, each case should start f
 | `question`   | string |         yes | Vietnamese user message. Trim whitespace. `min_length: 3`, `max_length: 3000`.           |
 | `user_type`  | string |          no | `citizen`, `household_business`, `foreign_visitor`, `unknown`. Default: `unknown`.       |
 | `chat_id`    | string |          no | If omitted, backend must create a new chat and return `chat_id`.                         |
-| `session_id` | string | conditional | Required when `chat_id` is omitted. Optional when `chat_id` is provided. Max length 128. |
+| `session_id` | string |          yes | Required for new chats and follow-ups. Max length 128.                                  |
 | `language`   | string |          no | MVP supports `vi`. Default: `vi`.                                                        |
 
 Request rules:
 
-1. If `chat_id` is omitted, `session_id` is required.
-2. If `chat_id` is omitted and `session_id` is missing, backend must return `invalid_request` with HTTP 400.
-3. If `chat_id` is provided, backend loads the chat from storage. If not found, return `chat_not_found` with HTTP 404.
-4. If both `chat_id` and `session_id` are provided, and the stored chat belongs to a different `session_id`, return `chat_not_found` with HTTP 404.
+1. `session_id` is required for every analyze request; if missing or invalid, return `invalid_request` with HTTP 400.
+2. If `chat_id` is omitted, backend creates a chat owned by `session_id`.
+3. If `chat_id` is provided, backend loads it only when it belongs to `session_id`.
+4. If the chat is missing, deleted, or belongs to another session, return `chat_not_found` with HTTP 404.
 5. Chats created through `/api/analyze` must always be linked to a `session_id`; orphan chats are not allowed in MVP v1.
 
 ### 10.4. Language Rule
@@ -542,9 +546,16 @@ Response:
 
 ---
 
-### 13.3. GET `/api/chats/{chat_id}`
+### 13.3. GET `/api/chats/{chat_id}?session_id=...`
 
 Load one chat thread and its messages.
+
+Rules:
+
+- `session_id` is required; missing input returns HTTP 400 `invalid_request`.
+- Backend must validate chat ownership before returning any chat or message field.
+- Missing, deleted, and wrong-session chats all return HTTP 404 `chat_not_found`.
+- The error response must not reveal the actual owner session.
 
 Response:
 
@@ -614,14 +625,16 @@ Message rules:
 
 ---
 
-### 13.4. DELETE `/api/chats/{chat_id}`
+### 13.4. DELETE `/api/chats/{chat_id}?session_id=...`
 
 Optional for MVP.
 
 Rules:
 
 - Soft delete is preferred.
-- Return 404 if `chat_id` does not exist.
+- `session_id` is required; missing input returns HTTP 400 `invalid_request`.
+- Return the same HTTP 404 `chat_not_found` when the chat is missing, deleted, or belongs to another session.
+- Do not reveal the actual owner session.
 
 Response:
 
@@ -1138,7 +1151,7 @@ For MVP v1, freeze the following decisions:
 8. Unsafe traffic evasion uses `domain: high_risk`, `risk_level: high`, `decision: refuse_unsafe_request`.
 9. Frontend renders by `content_type`, not by guessing whether content is string or object.
 10. Evaluation must isolate chat history by using fresh chats and a fresh eval `session_id` per run.
-11. Chat messages returned by `GET /api/chats/{chat_id}` must be sorted ascending by `created_at`; if timestamps tie, sort ascending by `message_id`.
+11. Chat messages returned by session-scoped `GET /api/chats/{chat_id}?session_id=...` must be sorted ascending by `created_at`; if timestamps tie, sort ascending by `message_id`.
 12. Orphan chats are forbidden: any chat created through `/api/analyze` must be linked to a non-empty `session_id`.
 
 Do not add voice, bilingual answering, OCR, upload, login, payment, or long-term memory to MVP v1.

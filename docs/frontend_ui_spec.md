@@ -272,7 +272,7 @@ Message list must render:
 - assistant messages as structured result cards;
 - messages in the order returned by backend.
 
-For `GET /api/chats/{chat_id}`, backend returns messages sorted ascending by `created_at`; frontend must preserve this order and must not reverse unless intentionally rendering newest-last in the same visual order.
+For `GET /api/chats/{chat_id}?session_id=...`, backend returns messages sorted ascending by `created_at`; frontend must preserve this order and must not reverse unless intentionally rendering newest-last in the same visual order.
 
 ---
 
@@ -294,7 +294,9 @@ Rules:
 - Reuse the same `session_id` for every request in the browser/demo session.
 - Send `session_id` with every `POST /api/analyze` request.
 - Send `session_id` with `GET /api/chats?session_id=...`.
+- Send `session_id` with `GET /api/chats/{chat_id}?session_id=...` and `DELETE /api/chats/{chat_id}?session_id=...`.
 - Do not treat `session_id` as secure authentication.
+- Do not treat `chat_id` as an authorization credential; backend still verifies session ownership.
 - Do not store personal identifiers inside `session_id`.
 
 Recommended format:
@@ -1038,7 +1040,7 @@ Rules:
 
 - `sessionId` comes from localStorage.
 - `currentChatId` comes from selected chat or returned analyze response.
-- `messages` comes from `GET /api/chats/{chat_id}` or local optimistic append after analyze response.
+- `messages` comes from session-scoped `GET /api/chats/{chat_id}?session_id=...` or local optimistic append after analyze response.
 - `isLoading` must block duplicate submits.
 
 ---
@@ -1108,14 +1110,14 @@ Assistant message:
 domain, risk_level, decision, summary, clarifying_questions, checklist, next_steps, sources, safety_notice, confidence, metadata
 ```
 
-Reloading the same chat through `GET /api/chats/{chat_id}` must render equivalent user and assistant messages. This is an acceptance check against optimistic-render/storage-render drift.
+Reloading the same chat through `GET /api/chats/{chat_id}?session_id=...` must render equivalent user and assistant messages. This is an acceptance check against optimistic-render/storage-render drift.
 
 ### 28.4. Open Existing Chat
 
 ```text
 1. User clicks chat in sidebar.
 2. Set currentChatId.
-3. Call GET /api/chats/{chat_id}.
+3. Call GET /api/chats/{chat_id}?session_id={currentSessionId}.
 4. Render messages in returned order.
 ```
 
@@ -1233,7 +1235,7 @@ Frontend should have minimum tests or manual acceptance checks for:
 - Reuses `chat_id` for follow-up.
 - Loads chats with `GET /api/chats?session_id=...`.
 - Renders loaded messages by `content_type`.
-- Locally appended messages after `/api/analyze` render equivalently after reload through `GET /api/chats/{chat_id}`.
+- Locally appended messages after `/api/analyze` render equivalently after reload through `GET /api/chats/{chat_id}?session_id=...`.
 
 ### 33.2. Rendering
 

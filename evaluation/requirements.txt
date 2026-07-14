@@ -1,0 +1,11 @@
+# Evaluation system dependencies. Deliberately small: the harness must be able
+# to run in CI without pulling the backend's stack.
+#
+# Nothing here talks to an external AI provider. The optional LLM judge needs
+# `anthropic`, which is intentionally NOT pinned here — install it only if you
+# opt in, so the core suites can never depend on a network service.
+
+httpx>=0.27,<0.29
+pydantic>=2.7,<3.0
+PyYAML>=6.0,<7.0
+pytest>=8.0,<9.0

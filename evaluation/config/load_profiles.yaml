@@ -1,0 +1,23 @@
+# Load profiles. Stress is never run on a PR.
+
+profiles:
+  smoke:
+    concurrency: 2
+    different_chat_requests: 20
+    same_chat_requests: 10
+    expected_http_statuses: [200]
+    description: Sanity check that concurrency does not break the contract.
+
+  mvp:
+    concurrency: 5
+    different_chat_requests: 100
+    same_chat_requests: 20
+    expected_http_statuses: [200]
+    description: MVP diagnostic measurement; 100 independent chats and 20 same-chat turns.
+
+  stress:
+    concurrency: 20
+    different_chat_requests: 500
+    same_chat_requests: 100
+    expected_http_statuses: [200]
+    description: Nightly/manual only. Finds the point where the backend degrades.

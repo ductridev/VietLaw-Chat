@@ -1,0 +1,23 @@
+{
+  "_comment": "Fault scenarios exercised by `python -m evaluation.cli faults` against evaluation/fakes/fake_backend.py. The production backend is never modified to produce these.",
+  "transport": [
+    "connection_reset",
+    "slow_response",
+    "empty_body",
+    "invalid_json",
+    "wrong_content_type"
+  ],
+  "http": [
+    "http_429",
+    "http_500",
+    "http_503_retrieval_error",
+    "http_422_instead_of_400"
+  ],
+  "response_defects": [
+    "missing_field",
+    "null_content_json",
+    "duplicate_message_ids",
+    "cross_session_leak"
+  ],
+  "note": "Response-content defects (fake sources, unsafe output, missing notice) live in evaluation/fakes/mutants.py so the unit tests and the fault server share one definition."
+}

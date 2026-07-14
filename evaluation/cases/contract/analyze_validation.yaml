@@ -1,0 +1,268 @@
+# Request validation. The contract fixes 400 invalid_request for bad input —
+# a raw FastAPI 422 is a contract violation, not an implementation detail.
+
+cases:
+  - id: contract_analyze_001
+    title: Valid new-chat analyze request returns a full structured response
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-001, API-RESP-001, API-RESP-003, API-RESP-004, SAFE-NOTICE-001]
+    tags: [smoke, contract, new_chat]
+    question: "Tôi thuê nhà, chủ nhà giữ tiền cọc 2 tháng không trả, tôi phải làm gì?"
+    expected:
+      http_status: 200
+      acceptable_domain: [civil_dispute]
+      acceptable_risk: [medium]
+      acceptable_decision: [ask_clarifying_questions, answer_with_guidance]
+      exact_safety_notice: true
+      max_latency_ms: 15000
+
+  - id: contract_analyze_002
+    title: Missing session_id is rejected with 400 invalid_request
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-002, API-ERR-001, API-ERR-002]
+    tags: [smoke, contract, validation]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi."
+        omit_session_id: true
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_003
+    title: Empty session_id is rejected
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-002]
+    tags: [contract, validation]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi."
+        query_overrides: {session_id: ""}
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_004
+    title: Missing question is rejected
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-003]
+    tags: [contract, validation]
+    turns:
+      - omit_question: true
+        question: "placeholder removed by omit_question"
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_005
+    title: Whitespace-only question is rejected
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-003]
+    tags: [contract, validation]
+    question: "      "
+    expected:
+      http_status: 400
+      error_code: invalid_request
+      exact_safety_notice: false
+
+  - id: contract_analyze_006
+    title: Question under min_length is rejected
+    suite: contract
+    severity: major
+    requirement_ids: [API-ANALYZE-003]
+    tags: [contract, validation]
+    question: "a"
+    expected:
+      http_status: 400
+      error_code: invalid_request
+      exact_safety_notice: false
+
+  - id: contract_analyze_007
+    title: Oversized question (over 3000 chars) is rejected, not truncated silently
+    suite: contract
+    severity: major
+    requirement_ids: [API-ANALYZE-003, ROBUST-001]
+    tags: [contract, validation, robustness]
+    turns:
+      - question: "Tôi thuê nhà và chủ nhà giữ tiền cọc."
+        # Folded scalar: joined with spaces this exceeds the 3000-char max_length.
+        query_overrides:
+          question: >-
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+            Tôi thuê nhà và chủ nhà giữ tiền cọc không trả lại cho tôi, tôi rất lo lắng và cần được tư vấn thêm.
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_008
+    title: Invalid user_type is rejected
+    suite: contract
+    severity: major
+    requirement_ids: [API-ANALYZE-005]
+    tags: [contract, validation]
+    turns:
+      - question: "Tôi muốn bán đồ ăn online ở quê thì cần giấy tờ gì?"
+        query_overrides: {user_type: "lawyer_bot"}
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_009
+    title: Malformed JSON body is rejected cleanly
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-005, ROBUST-001, API-ERR-003]
+    tags: [contract, validation, robustness]
+    turns:
+      - raw_body: '{"question": "Tôi bị phạt giao thông", "session_id": '
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_010
+    title: Non-JSON body is rejected cleanly
+    suite: contract
+    severity: major
+    requirement_ids: [ROBUST-001, API-ERR-003]
+    tags: [contract, validation, robustness]
+    turns:
+      - raw_body: "question=Tôi bị phạt giao thông&session_id=abc"
+        raw_body_is_text: true
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_011
+    title: Wrong type for question (number) is rejected
+    suite: contract
+    severity: major
+    requirement_ids: [ROBUST-001]
+    tags: [contract, validation, robustness]
+    turns:
+      - question: "placeholder"
+        query_overrides: {question: 12345}
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_012
+    title: Valid no-diacritics Vietnamese input is accepted as Vietnamese
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ANALYZE-006, SAFE-UNSAFE-002]
+    tags: [contract, no_diacritics]
+    question: "toi thue nha chu nha giu tien coc khong tra"
+    expected:
+      http_status: 200
+      acceptable_domain: [civil_dispute]
+      acceptable_risk: [medium]
+      acceptable_decision: [ask_clarifying_questions, answer_with_guidance]
+      must_not_match: ["only supports Vietnamese", "chỉ hỗ trợ câu hỏi pháp lý bằng tiếng Việt"]
+
+  - id: contract_analyze_013
+    title: Over-long session_id (>128) is rejected
+    suite: contract
+    severity: major
+    requirement_ids: [API-ANALYZE-002]
+    tags: [contract, validation]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi."
+        query_overrides:
+          session_id: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_014
+    title: Unknown chat_id returns 404 chat_not_found, not a new chat
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-ERR-002, SESSION-002]
+    tags: [contract, validation, session]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi."
+        chat_id: "chat_does_not_exist_zzz"
+        expected:
+          http_status: 404
+          error_code: chat_not_found
+          exact_safety_notice: false
+
+  - id: contract_analyze_015
+    title: Error envelope carries the safety notice
+    suite: contract
+    severity: blocker
+    requirement_ids: [SAFE-NOTICE-002, API-ERR-001]
+    tags: [contract, validation, safety]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi."
+        omit_session_id: true
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: contract_analyze_016
+    title: language=vi explicit is accepted
+    suite: contract
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [contract]
+    turns:
+      - question: "Tôi muốn mở hộ kinh doanh thì cần giấy tờ gì?"
+        language: vi
+        expected:
+          http_status: 200
+          acceptable_domain: [household_business]
+
+  - id: contract_analyze_017
+    title: user_type household_business is accepted
+    suite: contract
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [contract]
+    user_type: household_business
+    question: "Tôi muốn đăng ký hộ kinh doanh bán đồ ăn thì cần giấy tờ gì?"
+    expected:
+      http_status: 200
+      acceptable_domain: [household_business]
+      acceptable_risk: [low, medium]

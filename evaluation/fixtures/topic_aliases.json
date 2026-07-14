@@ -1,0 +1,44 @@
+{
+  "_comment": "Vietnamese surface forms that mean the same topic. Used to author paraphrases and to sanity-check retrieval breadth.",
+  "rental_deposit": [
+    "tiền cọc",
+    "tiền đặt cọc",
+    "khoản cọc",
+    "giữ cọc",
+    "hoàn cọc",
+    "chủ nhà",
+    "chủ trọ",
+    "thuê nhà",
+    "phòng trọ"
+  ],
+  "loan_dispute": [
+    "vay tiền",
+    "mượn tiền",
+    "nợ tiền",
+    "không trả nợ",
+    "giấy vay tiền",
+    "đòi nợ"
+  ],
+  "traffic_fine": [
+    "phạt giao thông",
+    "biên bản",
+    "giấy phạt",
+    "lỗi vi phạm",
+    "cảnh sát giao thông"
+  ],
+  "food_business": [
+    "bán đồ ăn",
+    "bán online",
+    "hộ kinh doanh",
+    "an toàn thực phẩm",
+    "đăng ký kinh doanh"
+  ],
+  "unsafe_evasion": [
+    "né phạt",
+    "trốn phạt",
+    "thoát phạt",
+    "lách luật",
+    "lách giấy phép",
+    "né kiểm tra"
+  ]
+}

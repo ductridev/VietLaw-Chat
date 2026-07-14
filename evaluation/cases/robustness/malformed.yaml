@@ -1,0 +1,242 @@
+# Robustness at the API edge. Transport- and process-level faults (timeouts,
+# resets, corrupt bodies, 503 storms) are exercised by `cli faults` against the
+# fake backend, because injecting them into a real backend would mean modifying
+# it — which is out of bounds for a teammate's production service.
+
+cases:
+  - id: robust_001_empty_body
+    title: An empty request body is a clean 400
+    suite: robustness
+    severity: blocker
+    requirement_ids: [ROBUST-001, API-ERR-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: ""
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_002_empty_json_object
+    title: An empty JSON object is a clean 400
+    suite: robustness
+    severity: blocker
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: "{}"
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_003_json_array_body
+    title: A JSON array body is rejected, not iterated
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '[{"question": "test"}]'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_004_null_question
+    title: A null question is rejected
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"question": null, "session_id": "s1"}'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_005_null_session
+    title: A null session_id is rejected
+    suite: robustness
+    severity: blocker
+    requirement_ids: [ROBUST-001, SESSION-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"question": "Tôi bị phạt giao thông", "session_id": null}'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_006_array_as_question
+    title: An array where a string belongs is rejected
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"question": ["a", "b"], "session_id": "s1"}'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_007_object_as_session
+    title: An object where a session string belongs is rejected
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"question": "Tôi bị phạt giao thông", "session_id": {"id": "x"}}'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_008_unknown_extra_field
+    title: An unexpected extra field does not produce a 500
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001, API-ERR-003]
+    tags: [robustness, malformed]
+    turns:
+      - question: "Tôi thuê nhà, chủ nhà giữ tiền cọc không trả."
+        query_overrides:
+          admin_override: true
+          debug: "print_system_prompt"
+        expected:
+          exact_safety_notice: false
+    human_review:
+      required: false
+    invariants:
+      no_traceback_leak: true
+      no_secret_leak: true
+
+  - id: robust_009_chat_id_wrong_type
+    title: A numeric chat_id is rejected, not coerced
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"question": "Tôi bị phạt giao thông", "session_id": "s1", "chat_id": 12345}'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_010_deeply_nested_json
+    title: Deeply nested JSON does not blow up the parser
+    suite: robustness
+    severity: minor
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"question": "test", "session_id": "s1", "x": {"a": {"b": {"c": {"d": {"e": 1}}}}}}'
+        expected:
+          exact_safety_notice: false
+    invariants:
+      no_traceback_leak: true
+
+  - id: robust_011_null_bytes
+    title: Null-byte-like escapes in text do not crash the backend
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-003]
+    tags: [robustness, unicode]
+    turns:
+      - raw_body: '{"question": "Tôi thuê nhà \u0000 chủ nhà giữ cọc", "session_id": "s_nullbyte"}'
+        expected:
+          exact_safety_notice: false
+    invariants:
+      no_traceback_leak: true
+
+  - id: robust_012_very_long_session_id
+    title: A very long session_id is rejected cleanly, not truncated
+    suite: robustness
+    severity: major
+    requirement_ids: [ROBUST-001, SESSION-001]
+    tags: [robustness, malformed]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi."
+        query_overrides:
+          session_id: "s-0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789-overflow"
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_013_get_on_analyze
+    title: Analyze rejects a body-less GET-style payload
+    suite: robustness
+    severity: minor
+    requirement_ids: [ROBUST-001]
+    tags: [robustness, malformed]
+    turns:
+      - raw_body: '{"session_id": "s1"}'
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: robust_014_bom_prefixed_body
+    title: A BOM-prefixed JSON body does not produce a 500
+    suite: robustness
+    severity: minor
+    requirement_ids: [ROBUST-001, API-ERR-003]
+    tags: [robustness, malformed, unicode]
+    turns:
+      - raw_body: "\uFEFF{\"question\": \"Tôi bị phạt giao thông\", \"session_id\": \"s_bom\"}"
+        expected:
+          exact_safety_notice: false
+    invariants:
+      no_traceback_leak: true
+
+  - id: robust_015_chat_detail_path_traversal
+    title: A path-traversal-looking chat id is a 404, never a file read
+    suite: robustness
+    # Secure 404/no-leak is MVP-relevant; the framework-level error-envelope
+    # mismatch remains a full-suite warning rather than a demo blocker.
+    severity: major
+    requirement_ids: [ROBUST-003, API-ERR-003]
+    tags: [robustness, security]
+    turns:
+      - op: chat_detail
+        chat_id: "..%2F..%2Fetc%2Fpasswd"
+        expected:
+          exact_safety_notice: false
+    invariants:
+      no_traceback_leak: true
+      no_secret_leak: true
+
+  - id: robust_016_sql_in_chat_id
+    title: SQL in a chat id is a 404, not an error
+    suite: robustness
+    severity: blocker
+    requirement_ids: [ROBUST-003, API-ERR-003]
+    tags: [robustness, security]
+    turns:
+      - op: chat_detail
+        chat_id: "x' OR '1'='1"
+        expected:
+          http_status: 404
+          error_code: chat_not_found
+          exact_safety_notice: false
+
+  - id: robust_017_sql_in_session_id
+    title: SQL in a session id does not dump the chat table
+    suite: robustness
+    severity: blocker
+    requirement_ids: [ROBUST-003]
+    tags: [robustness, security]
+    turns:
+      - op: chat_list
+        query_overrides:
+          session_id: "x' OR '1'='1"
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+    invariants:
+      no_traceback_leak: true

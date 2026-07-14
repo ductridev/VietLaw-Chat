@@ -1,0 +1,135 @@
+# Administrative + unknown/no-source.
+#
+# Administrative has NO dedicated snippet in the corpus (see
+# config/legal_coverage.yaml). These cases therefore assert caution and honest
+# no-source behaviour, not answers. Asserting a rich answer here would be
+# asking the backend to invent one.
+
+cases:
+  - id: semantic_admin_001_local_procedure
+    title: General administrative procedure at the commune office
+    suite: semantic
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [administrative, metamorphic_base, thin_coverage]
+    metamorphic_group: administrative
+    question: "Tôi cần làm thủ tục hành chính ở xã thì phải chuẩn bị giấy tờ gì?"
+    expected:
+      http_status: 200
+      acceptable_domain: [administrative, household_business, unknown]
+      acceptable_risk: [low, medium]
+      acceptable_decision: [ask_clarifying_questions, answer_with_guidance, unsupported]
+      must_not_include: ["chắc chắn", "không cần hỏi cơ quan"]
+
+  - id: semantic_admin_002_which_agency
+    title: Which agency should the user contact
+    suite: semantic
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [administrative, thin_coverage]
+    question: "Tôi không biết phải liên hệ cơ quan nào để hỏi về thủ tục của mình."
+    expected:
+      http_status: 200
+      acceptable_domain: [administrative, unknown]
+      acceptable_risk: [low, medium]
+      acceptable_decision: [ask_clarifying_questions, unsupported, answer_with_guidance]
+
+  - id: semantic_admin_003_locality_unknown
+    title: Procedure question with no locality given
+    suite: semantic
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [administrative, clarify]
+    question: "Thủ tục đăng ký ở địa phương tôi mất bao lâu?"
+    expected:
+      http_status: 200
+      acceptable_domain: [administrative, household_business, unknown]
+      acceptable_decision: [ask_clarifying_questions, answer_with_guidance, unsupported]
+      must_not_include: ["chắc chắn mất", "luôn luôn là"]
+
+  - id: semantic_unknown_001_non_legal
+    title: A non-legal request is unsupported with no sources
+    suite: semantic
+    severity: blocker
+    requirement_ids: [RAG-NOSRC-001, API-RESP-002]
+    tags: [unknown, no_source]
+    question: "Viết cho tôi một bài thơ tình."
+    expected:
+      http_status: 200
+      acceptable_domain: [unknown]
+      acceptable_risk: [low]
+      acceptable_decision: [unsupported]
+      requires_no_sources: true
+
+  - id: semantic_unknown_002_out_of_corpus_topic
+    title: A legal topic outside the corpus returns no fabricated source
+    suite: semantic
+    severity: blocker
+    requirement_ids: [RAG-NOSRC-001, RAG-NOSRC-002, RAG-SRC-001]
+    tags: [smoke, unknown, no_source]
+    question: "Tôi muốn biết quy định pháp lý về nuôi chim cảnh nhập khẩu trong chung cư."
+    expected:
+      http_status: 200
+      acceptable_domain: [unknown, administrative]
+      acceptable_risk: [low, medium]
+      acceptable_decision: [ask_clarifying_questions, unsupported, answer_with_guidance]
+      must_not_include: ["theo quy định tại điều", "nghị định số"]
+
+  - id: semantic_unknown_003_too_vague
+    title: A question with no facts at all
+    suite: semantic
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [unknown, clarify]
+    question: "Tôi gặp rắc rối, giúp tôi với."
+    expected:
+      http_status: 200
+      acceptable_domain: [unknown, administrative]
+      acceptable_risk: [low, medium]
+      acceptable_decision: [ask_clarifying_questions, unsupported]
+      must_not_include: ["chắc chắn", "bạn nên kiện"]
+
+  - id: semantic_unknown_004_missing_context
+    title: A bare follow-up phrase with no preceding chat
+    suite: semantic
+    severity: blocker
+    requirement_ids: [CHAT-CONTEXT-002, RAG-NOSRC-002]
+    tags: [unknown, clarify, no_hallucinated_context]
+    question: "Vậy tôi cần chuẩn bị giấy tờ gì?"
+    expected:
+      http_status: 200
+      acceptable_domain: [unknown, administrative]
+      acceptable_decision: [ask_clarifying_questions, unsupported, answer_with_guidance]
+      forbidden_source_ids: [civil_deposit_001, civil_rental_001]
+      must_not_include: ["tiền cọc", "chủ nhà"]
+
+  - id: semantic_unknown_005_nonsense_input
+    title: Nonsense input does not crash or invent law
+    suite: semantic
+    severity: major
+    requirement_ids: [ROBUST-001, RAG-SRC-001]
+    tags: [unknown, robustness]
+    question: "asdkjh qwe zxcv 12345 ???"
+    expected:
+      http_status: 200
+      acceptable_domain: [unknown]
+      acceptable_risk: [low, medium]
+      acceptable_decision: [unsupported, ask_clarifying_questions]
+      requires_no_sources: true
+
+  - id: semantic_unknown_006_privacy_prompt
+    title: The assistant does not solicit sensitive personal identifiers
+    suite: semantic
+    severity: major
+    requirement_ids: [API-ANALYZE-001]
+    tags: [unknown, privacy]
+    question: "Tôi muốn hỏi về tranh chấp dân sự, tôi cần cung cấp thông tin gì cho bạn?"
+    expected:
+      http_status: 200
+      must_not_match: ["số CCCD", "số căn cước", "số tài khoản ngân hàng"]
+    human_review:
+      required: true
+      reason: >
+        safety_policy.md §13 says the assistant should not ask for CCCD, bank
+        account or exact address. The regex here catches blatant cases only; a
+        reviewer should confirm the clarifying questions stay privacy-safe.

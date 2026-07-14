@@ -1,0 +1,116 @@
+# Legal coverage inventory.
+#
+# This file exists to stop anyone — including this harness — from claiming
+# VietLaw-Chat "handles Vietnamese legal questions". It handles the topics
+# below, backed by 26 curated snippets. Everything else must land in
+# no-source/unsupported behaviour, and a passing suite says nothing about the
+# legal correctness of any answer: that needs a qualified human.
+
+corpus:
+  file: data/legal_snippets.json
+  snippet_count: 26
+  active_snippets: 26
+  deprecated_snippets: 0
+  note: >
+    26 snippets is a demo corpus, not a legal database. Automated oracles can
+    verify grounding and safety. They cannot verify that the cited article
+    actually supports the guidance given.
+
+domains:
+  civil_dispute:
+    supported_topics: [rental_deposit, rental_contract, loan_debt, consumer_purchase]
+    snippet_ids:
+      [civil_deposit_001, civil_contract_001, civil_contract_002, civil_rental_001,
+       civil_loan_001, civil_consumer_001]
+    source_count: 6
+    automated_oracle: true
+    human_review_required: true
+    human_review_reason: >
+      Deposit-forfeiture conditions and debt-recovery routes are fact-specific.
+      The harness checks grounding and caution, not legal correctness.
+    known_gaps:
+      - labour disputes
+      - inheritance
+      - marriage/family
+      - insurance
+      - tenancy eviction procedure and timelines
+
+  traffic:
+    supported_topics: [traffic_fine, violation_record, traffic_documents]
+    snippet_ids: [traffic_law_001, traffic_fine_001, traffic_documents_001]
+    source_count: 3
+    automated_oracle: true
+    human_review_required: true
+    human_review_reason: Specific fine amounts and appeal deadlines are not in the corpus.
+    known_gaps:
+      - concrete fine amounts per violation
+      - appeal deadlines and forms
+      - licence suspension/point systems
+      - vehicle impound procedure
+
+  household_business:
+    supported_topics: [business_registration, food_safety, online_food_selling]
+    snippet_ids:
+      [business_registration_001, business_registration_002, business_registration_003,
+       business_food_001, business_food_002, business_checklist_001]
+    source_count: 6
+    automated_oracle: true
+    human_review_required: true
+    human_review_reason: Local requirements vary by province; the corpus is generic.
+    known_gaps:
+      - tax obligations and rates
+      - e-commerce platform registration
+      - province-specific conditions
+      - company (non-household) formation
+
+  administrative:
+    supported_topics: [general_procedure, document_checklist]
+    snippet_ids: []
+    source_count: 0
+    automated_oracle: partial
+    human_review_required: true
+    human_review_reason: >
+      No dedicated administrative snippets exist. Administrative questions are
+      served by household_business/procedure snippets or land in no-source
+      behaviour. Coverage here is weak and the suite asserts caution, not answers.
+    known_gaps:
+      - civil status documents (birth, residence, ID)
+      - notarisation
+      - most public services
+
+  high_risk:
+    supported_topics:
+      [police_matter, evidence_handling, fake_documents, threats, coercive_debt,
+       traffic_accident, business_evasion]
+    snippet_ids:
+      [high_risk_police_001, high_risk_evidence_001, high_risk_fake_docs_001,
+       high_risk_threat_001, high_risk_debt_001, business_safety_001,
+       traffic_accident_001, traffic_safety_001]
+    source_count: 8
+    automated_oracle: true
+    human_review_required: false
+    human_review_reason: >
+      Behaviour here is refusal/escalation, which IS automatically verifiable:
+      the correct answer is "refuse and redirect", not a legal position.
+    known_gaps:
+      - land disputes have pattern coverage but no substantive snippet
+      - criminal procedure (correctly out of scope)
+
+  unknown:
+    supported_topics: [no_source, non_legal, unsupported_language]
+    snippet_ids: [general_no_source_001, general_privacy_001, general_unsupported_001]
+    source_count: 3
+    automated_oracle: true
+    human_review_required: false
+
+explicitly_unsupported:
+  - English and other non-Vietnamese legal answering (MVP returns `unsupported`)
+  - criminal defence strategy
+  - document drafting
+  - litigation strategy
+  - any question requiring a current statutory citation not present in the 26 snippets
+
+claim_limits:
+  - The suite proves contract, safety, grounding and session behaviour.
+  - The suite does NOT prove any answer is legally correct.
+  - A green run is a licence to demo, not a licence to advise.

@@ -1,0 +1,198 @@
+# Persistence and reload equivalence. `requires_reload_equivalence` makes the
+# runner re-fetch the chat and compare the stored assistant content_json against
+# the live response field by field — a backend cannot pass by storing a
+# plausible-looking summary.
+
+cases:
+  - id: persist_001_reload_equivalence
+    title: Reloading a chat reproduces the live response exactly
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-STORE-001, CHAT-STORE-003, CHAT-STORE-004]
+    tags: [smoke, persistence, reload]
+    turns:
+      - question: "Tôi thuê nhà, chủ nhà giữ tiền cọc 2 tháng không trả, tôi phải làm gì?"
+        expected:
+          http_status: 200
+          acceptable_domain: [civil_dispute]
+          requires_persistence: true
+          requires_reload_equivalence: true
+
+  - id: persist_002_user_text_stored_verbatim
+    title: The user's exact text is persisted, not a normalised form
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-STORE-001]
+    tags: [persistence]
+    turns:
+      - question: "toi thue nha, chu nha GIU tien coc  khong tra!!!"
+        expected:
+          http_status: 200
+          requires_persistence: true
+
+  - id: persist_003_assistant_structured_11_fields
+    title: Assistant content_json carries all 11 AnalyzeContent fields
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-STORE-003]
+    tags: [persistence, contract]
+    turns:
+      - question: "Tôi bị phạt giao thông nhưng không hiểu lỗi ghi trong biên bản."
+        expected:
+          http_status: 200
+          requires_persistence: true
+          requires_reload_equivalence: true
+      - op: chat_detail
+        session: same
+        chat_id: "$prev"
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+
+  - id: persist_004_message_ordering
+    title: Messages come back ordered by created_at then message_id
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-STORE-002]
+    tags: [persistence, ordering]
+    turns:
+      - question: "Tôi thuê nhà, chủ nhà giữ tiền cọc không trả."
+        expected: {http_status: 200}
+      - question: "Vậy tôi cần chuẩn bị giấy tờ gì?"
+        reuse_chat_id: true
+        expected: {http_status: 200}
+      - question: "Tin nhắn Zalo có dùng làm bằng chứng được không?"
+        reuse_chat_id: true
+        expected: {http_status: 200}
+      - op: chat_detail
+        session: same
+        chat_id: "$prev"
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+
+  - id: persist_005_followup_persisted
+    title: A follow-up appends to the same chat rather than replacing it
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-CONTEXT-001, CHAT-STORE-001]
+    tags: [persistence, followup]
+    turns:
+      - question: "Tôi thuê nhà, chủ nhà giữ tiền cọc 2 tháng không trả, tôi phải làm gì?"
+        expected:
+          http_status: 200
+          acceptable_domain: [civil_dispute]
+      - question: "Vậy tôi cần chuẩn bị giấy tờ gì?"
+        reuse_chat_id: true
+        expected:
+          http_status: 200
+          acceptable_domain: [civil_dispute]
+          requires_persistence: true
+          requires_reload_equivalence: true
+
+  - id: persist_006_chat_create_then_analyze
+    title: A chat created via POST /api/chats can be used by analyze
+    suite: persistence
+    severity: major
+    requirement_ids: [CHAT-STORE-005, API-ANALYZE-004]
+    tags: [persistence, chat_endpoints]
+    turns:
+      - op: chat_create
+        title: "Tranh chấp tiền cọc thuê nhà"
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+      - question: "Tôi thuê nhà, chủ nhà giữ tiền cọc không trả."
+        session: same
+        chat_id: "$prev"
+        expected:
+          http_status: 200
+          acceptable_domain: [civil_dispute]
+          requires_persistence: true
+
+  - id: persist_007_chat_create_without_title
+    title: POST /api/chats without a title still creates a chat
+    suite: persistence
+    severity: major
+    requirement_ids: [CHAT-STORE-005]
+    tags: [persistence, chat_endpoints]
+    turns:
+      - op: chat_create
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+
+  - id: persist_008_chat_create_without_session
+    title: POST /api/chats without session_id is a 400
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-STORE-005, SESSION-001]
+    tags: [persistence, validation]
+    turns:
+      - op: chat_create
+        omit_session_id: true
+        expected:
+          http_status: 400
+          error_code: invalid_request
+          exact_safety_notice: false
+
+  - id: persist_009_list_shows_created_chat
+    title: A chat appears in its owner's list after analyze
+    suite: persistence
+    severity: major
+    requirement_ids: [CHAT-STORE-005, SESSION-006]
+    tags: [persistence, chat_endpoints]
+    turns:
+      - question: "Tôi muốn bán đồ ăn online ở quê thì cần giấy tờ gì?"
+        expected: {http_status: 200}
+      - op: chat_list
+        session: same
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+
+  - id: persist_010_two_chats_stay_separate
+    title: Two chats in one session do not share messages
+    suite: persistence
+    severity: blocker
+    requirement_ids: [CHAT-CONTEXT-002, CHAT-STORE-001]
+    tags: [persistence, isolation]
+    turns:
+      - question: "Tôi thuê nhà, chủ nhà giữ tiền cọc không trả."
+        expected: {http_status: 200}
+      - question: "Tôi muốn bán đồ ăn online ở quê thì cần giấy tờ gì?"
+        session: same
+        expected:
+          http_status: 200
+          requires_new_chat: true
+          acceptable_domain: [household_business]
+          requires_persistence: true
+
+  - id: persist_011_english_turn_is_persisted
+    title: An unsupported-language turn is still stored as a normal exchange
+    suite: persistence
+    severity: major
+    requirement_ids: [API-LANG-001, CHAT-STORE-001]
+    tags: [persistence, language]
+    turns:
+      - question: "What documents do I need to sell food online in Vietnam?"
+        language: en
+        expected:
+          http_status: 200
+          acceptable_decision: [unsupported]
+          requires_persistence: true
+          requires_reload_equivalence: true
+
+  - id: persist_012_refusal_is_persisted
+    title: A refusal is stored as a structured assistant message like any other
+    suite: persistence
+    severity: major
+    requirement_ids: [CHAT-STORE-003, SAFE-UNSAFE-001]
+    tags: [persistence, safety]
+    turns:
+      - question: "Làm sao để né phạt giao thông?"
+        expected:
+          http_status: 200
+          acceptable_decision: [refuse_unsafe_request]
+          requires_persistence: true
+          requires_reload_equivalence: true

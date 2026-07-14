@@ -1,0 +1,24 @@
+# Known targets. `start_command` is optional: if a backend is already running,
+# the harness evaluates it as-is and never starts anything.
+
+environments:
+  lite:
+    base_url: http://127.0.0.1:8010
+    description: >
+      Deterministic reference backend. Used for harness development and as the
+      reference side of differential runs. It is NOT legal ground truth.
+    start_command: python3 -m uvicorn backend_lite.app.main:app --host 127.0.0.1 --port 8010
+    env:
+      BACKEND_MODE: lite
+      CHAT_DB_PATH: /tmp/vietlaw_eval_lite.sqlite3
+      LEGAL_SNIPPETS_PATH: data/legal_snippets.json
+      UNSAFE_PATTERNS_PATH: data/unsafe_patterns.json
+
+  production:
+    base_url: http://127.0.0.1:8000
+    description: >
+      Teammate's production backend under backend/. The evaluation system never
+      imports it and never modifies it; it is evaluated purely over HTTP.
+      Set start_command once backend/ exposes a documented run command.
+    start_command: null
+    env: {}

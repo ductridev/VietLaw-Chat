@@ -1,0 +1,5 @@
+# Source identity is checked separately against data/legal_snippets.json.
+# These thresholds only reject excerpts too small to be useful to a reviewer.
+source:
+  min_excerpt_chars: 30
+  min_excerpt_tokens: 5

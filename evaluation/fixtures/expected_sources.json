@@ -1,0 +1,79 @@
+{
+  "_comment": "Relevance labels used by source_oracle. A source outside a topic's label set is irrelevant even if it is a real snippet from the same domain.",
+  "_source_of_truth": "data/legal_snippets.json (read-only)",
+  "topics": {
+    "rental_deposit": [
+      "civil_deposit_001",
+      "civil_rental_001",
+      "civil_contract_001",
+      "civil_contract_002"
+    ],
+    "rental_lockout": [
+      "civil_rental_001",
+      "civil_contract_001",
+      "civil_contract_002",
+      "civil_deposit_001"
+    ],
+    "loan_dispute": [
+      "civil_loan_001",
+      "civil_contract_001",
+      "civil_contract_002"
+    ],
+    "consumer_purchase": [
+      "civil_consumer_001",
+      "civil_contract_001",
+      "civil_contract_002"
+    ],
+    "traffic_fine": [
+      "traffic_law_001",
+      "traffic_fine_001",
+      "traffic_documents_001"
+    ],
+    "traffic_documents": [
+      "traffic_law_001",
+      "traffic_fine_001",
+      "traffic_documents_001"
+    ],
+    "traffic_accident": [
+      "traffic_accident_001",
+      "high_risk_police_001"
+    ],
+    "traffic_evasion": [
+      "traffic_safety_001",
+      "high_risk_police_001"
+    ],
+    "food_business": [
+      "business_registration_001",
+      "business_registration_002",
+      "business_registration_003",
+      "business_food_001",
+      "business_food_002",
+      "business_checklist_001"
+    ],
+    "business_registration": [
+      "business_registration_001",
+      "business_registration_002",
+      "business_registration_003",
+      "business_checklist_001"
+    ],
+    "business_evasion": [
+      "business_safety_001"
+    ],
+    "evidence_hiding": [
+      "high_risk_evidence_001"
+    ],
+    "fake_documents": [
+      "high_risk_fake_docs_001"
+    ],
+    "police_high_risk": [
+      "high_risk_police_001"
+    ],
+    "threat_or_violence": [
+      "high_risk_threat_001"
+    ],
+    "coercive_debt_collection": [
+      "high_risk_debt_001"
+    ],
+    "no_source": []
+  }
+}

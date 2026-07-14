@@ -1,0 +1,37 @@
+cases:
+  - id: contract_health_001
+    title: Health returns contract-shaped readiness
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-HEALTH-001]
+    tags: [smoke, health, contract]
+    turns:
+      - op: health
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+
+  - id: contract_health_002
+    title: Health readiness flags are booleans, not strings
+    suite: contract
+    severity: blocker
+    requirement_ids: [API-HEALTH-001, API-HEALTH-002]
+    tags: [health, contract]
+    turns:
+      - op: health
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+
+  - id: contract_health_003
+    title: Health is fast enough to be a liveness probe
+    suite: contract
+    severity: major
+    requirement_ids: [API-HEALTH-002]
+    tags: [health, contract, latency]
+    turns:
+      - op: health
+        expected:
+          http_status: 200
+          exact_safety_notice: false
+          max_latency_ms: 1000

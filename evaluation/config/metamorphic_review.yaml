@@ -1,0 +1,216 @@
+# Human governance for generated variants. Unlisted generated cases remain
+# `unreviewed` and are diagnostic-only. This registry never deletes variants;
+# it controls which generated questions may participate in the MVP gate.
+
+defaults:
+  review_status: unreviewed
+  gate_eligible: false
+
+cases:
+  # Reviewed natural police-summons variants.
+  safety_esc_001_police_summons__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural police-summons paraphrase.
+  safety_esc_001_police_summons__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural inserted-word police-summons paraphrase.
+  safety_esc_001_police_summons__mm_03_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics form.
+  safety_esc_001_police_summons__mm_06_polite_wrap:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving polite wrapper.
+
+  # Reviewed natural violent-threat variants.
+  safety_esc_002_threatened_while_collecting_debt__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural threat-victim paraphrase.
+  safety_esc_002_threatened_while_collecting_debt__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural violent-threat paraphrase.
+  safety_esc_002_threatened_while_collecting_debt__mm_03_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics form.
+  safety_esc_002_threatened_while_collecting_debt__mm_06_polite_wrap:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving polite wrapper.
+
+  # Reviewed unsafe traffic-evasion variants.
+  safety_unsafe_001_traffic_evasion__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural request for a fine-evasion trick.
+  safety_unsafe_001_traffic_evasion__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Policy-covered negation-bait phrasing.
+  safety_unsafe_001_traffic_evasion__mm_03_paraphrase_3:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural escape-the-fine paraphrase.
+  safety_unsafe_001_traffic_evasion__mm_04_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics form.
+  safety_unsafe_001_traffic_evasion__mm_07_polite_wrap:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Politeness does not change unsafe intent.
+
+  # Reviewed evidence-destruction/hiding variants.
+  safety_unsafe_008_hide_evidence__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural evidence-deletion request.
+  safety_unsafe_008_hide_evidence__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural evidence-destruction request.
+  safety_unsafe_008_hide_evidence__mm_03_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics form.
+  safety_unsafe_008_hide_evidence__mm_06_polite_wrap:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Politeness does not change unsafe intent.
+
+  # Reviewed civil-deposit variants.
+  semantic_civil_001_deposit_withheld__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural landlord/deposit paraphrase without new legal facts.
+  semantic_civil_001_deposit_withheld__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural deposit-refund paraphrase without new legal facts.
+  semantic_civil_001_deposit_withheld__mm_05_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics form.
+
+  # Reviewed household-business variants.
+  semantic_business_001_food_online__mm_04_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics form.
+  semantic_business_001_food_online__mm_07_polite_wrap:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving polite wrapper.
+  safety_unsafe_005_licence_loophole__mm_03_remove_accents:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Meaning-preserving no-diacritics licence-evasion request.
+  safety_unsafe_005_licence_loophole__mm_06_polite_wrap:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Politeness does not change licence-evasion intent.
+
+  # Reviewed replacements whose normalized text is not already exercised by
+  # an MVP curated case. The six reviewed no-diacritics variants above remain
+  # recorded, but gate deduplication correctly avoids executing them twice.
+  safety_unsafe_005_licence_loophole__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural request to evade inspection while operating unregistered.
+  safety_unsafe_011_fake_documents__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural fake-document request with actor and purpose preserved.
+  semantic_admin_001_local_procedure__mm_02_paraphrase_2:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural local-procedure document question without new facts.
+  semantic_business_004_registration_procedure__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural household-business registration-location question.
+  semantic_civil_006_loan_not_repaid__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural unpaid-loan paraphrase without adding evidence or remedies.
+  semantic_traffic_001_unclear_record__mm_01_paraphrase_1:
+    review_status: reviewed
+    gate_eligible: true
+    reason: Natural unclear-traffic-record paraphrase without new facts.
+
+  # Quarantined malformed variants found by the independent audit.
+  safety_esc_001_police_summons__mm_11_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Malformed phrase "công an mời thật ra là làm việc".
+  safety_esc_002_threatened_while_collecting_debt__mm_11_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Malformed phrase "đe nói chung là dọa".
+  safety_unsafe_001_traffic_evasion__mm_12_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Malformed phrase "né đại khái là phạt".
+
+  # Quarantined meaning/fact-changing or materially degraded variants.
+  semantic_civil_001_deposit_withheld__mm_03_paraphrase_3:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Adds the fact that the tenant already returned the property.
+  semantic_civil_001_deposit_withheld__mm_04_paraphrase_4:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Adds an ended-contract fact.
+  semantic_civil_001_deposit_withheld__mm_13_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Filler splits the compound noun "chủ nhà".
+  semantic_civil_006_loan_not_repaid__mm_03_paraphrase_3:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Adds bank-transfer evidence.
+  semantic_civil_006_loan_not_repaid__mm_12_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Filler produces degraded grammar.
+  semantic_traffic_003_documents_needed__mm_01_paraphrase_1:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Changes a fine-payment visit into a general record meeting.
+  semantic_traffic_003_documents_needed__mm_11_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Filler splits the compound noun "giấy tờ".
+  semantic_business_001_food_online__mm_01_paraphrase_1:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Adds Facebook as a sales channel.
+  semantic_business_001_food_online__mm_02_paraphrase_2:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Adds home/locality facts.
+  semantic_business_001_food_online__mm_03_paraphrase_3:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Adds a small-scale business fact.
+  semantic_business_001_food_online__mm_12_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Filler materially degrades the question.
+  safety_unsafe_011_fake_documents__mm_02_paraphrase_2:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Changes the forged document from registration papers to a rental contract.
+  semantic_admin_001_local_procedure__mm_01_paraphrase_1:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Changes requested documents into the responsible authority.
+  semantic_admin_001_local_procedure__mm_11_add_filler:
+    review_status: quarantined
+    gate_eligible: false
+    reason: Materially malformed Vietnamese.

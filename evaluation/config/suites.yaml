@@ -1,0 +1,133 @@
+# Suite definitions. A suite is a *selection* over the case corpus, never a
+# separate copy of cases: the same case behaves identically in every suite it
+# appears in.
+
+suites:
+  smoke:
+    description: >
+      Fast confidence check for local dev and every PR. Health, new chat,
+      follow-up, reload, session mismatch, one RAG case, one unsafe case, one
+      English unsupported case, one no-source case, exact safety notice.
+    include_tags: [smoke]
+
+  mvp:
+    description: >
+      Reviewed MVP acceptance gate: critical contract/session/persistence/RAG,
+      frozen safety expectations, three demo domains, and a human-reviewed
+      metamorphic subset. Full, differential and load remain diagnostic.
+    explicit_case_ids:
+      - adv_003_invent_a_source
+      - adv_004_source_id_injection
+      - contract_analyze_001
+      - contract_analyze_002
+      - contract_analyze_009
+      - contract_analyze_012
+      - contract_analyze_014
+      - contract_analyze_015
+      - contract_health_001
+      - conversation_001_same_topic_followup
+      - conversation_004_unsafe_later_turn
+      - lang_002_no_diacritics_civil
+      - lang_003_no_diacritics_business
+      - lang_017_english_unsupported
+      - persist_001_reload_equivalence
+      - persist_003_assistant_structured_11_fields
+      - persist_004_message_ordering
+      - persist_005_followup_persisted
+      - persist_010_two_chats_stay_separate
+      - rag_001_deposit_retrieves_deposit_source
+      - rag_002_traffic_excludes_civil
+      - rag_003_business_excludes_traffic
+      - rag_006_no_source_out_of_corpus
+      - rag_008_no_strong_claim_without_source
+      - rag_010_source_fields_faithful
+      - rag_012_metadata_matches_sources
+      - safety_esc_001_police_summons
+      - safety_esc_002_threatened_while_collecting_debt
+      - safety_esc_006_accident_death
+      - safety_unsafe_001_traffic_evasion
+      - safety_unsafe_002_traffic_evasion_no_diacritics
+      - safety_unsafe_008_hide_evidence
+      - safety_unsafe_011_fake_documents
+      - safety_unsafe_016_threaten_debtor
+      - safety_unsafe_018_seize_property
+      - semantic_business_001_food_online
+      - semantic_civil_001_deposit_withheld
+      - semantic_traffic_001_unclear_record
+      - semantic_unknown_001_non_legal
+      - session_001_analyze_wrong_session
+      - session_002_detail_wrong_session
+      - session_003_delete_wrong_session
+      - session_005_list_is_session_scoped
+      - session_013_new_chat_per_request
+    metamorphic_variants: 16
+    required_seed: 20260713
+    include_generated: true
+    generated_review_statuses: [reviewed]
+    require_gate_eligible: true
+    deduplicate_normalized_questions: true
+
+  pr:
+    description: >
+      Broad curated diagnostic for pull requests or manual investigation. It is
+      not the default MVP merge gate while backend_lite has known real failures.
+    include_suites: [contract, session, persistence, safety, rag, conversation, language]
+    exclude_tags: [long_thread, stress, slow]
+
+  contract:
+    description: API contract, validation, error envelope, chat endpoints.
+    include_suites: [contract, session, persistence]
+
+  semantic:
+    description: Curated domain/risk/decision behaviour and RAG grounding.
+    include_suites: [semantic, rag]
+
+  safety:
+    description: Unsafe input refusal, safe contrast, adversarial and injection.
+    include_suites: [safety, adversarial]
+
+  conversation:
+    description: Multi-turn context, topic switch, unsafe later turn, persistence.
+    include_suites: [conversation]
+
+  rag:
+    description: Retrieval correctness, citation integrity and no-source behaviour.
+    include_suites: [rag]
+
+  language:
+    description: Vietnamese diacritics/typos/Unicode plus English unsupported.
+    include_suites: [language]
+
+  robustness:
+    description: Malformed input and adversarial payload handling at the API edge.
+    include_suites: [robustness]
+
+  metamorphic:
+    description: Seeded meaning-preserving variants of the metamorphic base cases.
+    include_suites: [metamorphic]
+    metamorphic_variants: 16
+
+  full:
+    description: >
+      Everything except load/stress: all curated suites plus generated
+      metamorphic variants. Diagnostic/nightly until product owner promotes it.
+    include_suites:
+      [contract, session, persistence, semantic, rag, safety, adversarial, conversation, language, robustness]
+    metamorphic_variants: 16
+    include_generated: true
+
+  nightly:
+    description: Diagnostic full suite with more metamorphic variants per base case.
+    include_suites:
+      [contract, session, persistence, semantic, rag, safety, adversarial, conversation, language, robustness]
+    metamorphic_variants: 20
+    include_generated: true
+
+  release:
+    description: >
+      Post-MVP diagnostic selection matching full. It does not enforce clearing
+      the complete auto-generated human-review queue.
+    include_suites:
+      [contract, session, persistence, semantic, rag, safety, adversarial, conversation, language, robustness]
+    metamorphic_variants: 16
+    include_generated: true

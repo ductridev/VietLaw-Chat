@@ -833,6 +833,66 @@ Evaluation rules:
 | Follow-up demo case | pass |
 | API schema validation | 100% |
 
+### Evaluation Platform and Reviewed MVP Gate (`evaluation/`)
+
+`scripts/run_eval.py` above is the frozen golden/demo runner and still works
+unchanged. The evaluation platform is a separate, black-box harness that
+measures contract, session isolation, persistence, RAG citation integrity,
+safety, robustness, concurrency, and paraphrase invariance. It talks to a
+backend only over HTTP, so `backend/` and `backend_lite/` are judged identically
+and neither is imported.
+
+The current reviewed MVP selection is `mvp`: exactly 68 executions at seed
+20260713 (44 curated + 24 reviewed metamorphic variants). That seed is pinned
+to the reviewed content; another seed is rejected until re-review. Broader `pr`, `full`,
+`nightly`, differential, and load capabilities remain diagnostic until the
+product owner promotes them. This diagnostic strategy does not silently
+supersede `docs/archive/evaluation_plan.md`.
+
+```bash
+python3 -m pip install -r evaluation/requirements.txt
+
+# no backend needed: validate cases, run unit tests, and prove the harness
+# actually fails when a backend is broken
+python3 -m evaluation.cli validate
+python3 -m pytest evaluation/tests -q
+python3 -m evaluation.cli faults
+
+# start a backend (reference on 8010, production on 8000), then:
+python3 -m evaluation.cli run --base-url http://127.0.0.1:8010 --suite smoke   # 19
+python3 -m evaluation.cli run --base-url http://127.0.0.1:8010 --suite mvp --seed 20260713  # 68
+
+# broad diagnostics (PR=137, full=425, nightly=477 at this seed)
+python3 -m evaluation.cli run --base-url http://127.0.0.1:8010 --suite pr
+python3 -m evaluation.cli run --base-url http://127.0.0.1:8010 --suite full --seed 20260713
+
+# experimental reference-assisted diagnostic; candidate normal oracles still gate it
+python3 -m evaluation.cli differential \
+  --reference-url http://127.0.0.1:8010 --candidate-url http://127.0.0.1:8000 --suite semantic
+
+# nightly/manual measurement, not a production capacity claim
+python3 -m evaluation.cli load --base-url http://127.0.0.1:8010 --profile mvp
+```
+
+`scripts/run_eval_full.py --base-url ... --suite mvp` is an equivalent wrapper.
+
+Exit codes: `0` pass · `1` evaluation failure · `2` config/schema error ·
+`3` backend unavailable.
+
+A gate run passes only when **no blocker case failed and every threshold held** — a
+high aggregate pass rate can never rescue a single fabricated citation or
+cross-session leak.
+
+**What a green run does and does not mean.** It means the selected checks found
+no modeled contract/session/source/safety blocker. Source identity is verified
+against the corpus and excerpt usefulness is heuristic. It does **not** mean an
+answer is legally correct or that the cited law supports the advice: the corpus
+has 26 curated snippets and no automated oracle can establish legal support.
+Responses making substantive legal claims are written to
+`outputs/eval/<run_id>/human_review.md` for a qualified reviewer. See
+`evaluation/config/legal_coverage.yaml` for exactly which topics are supported,
+and `docs/evaluation_strategy.md` for the reasoning.
+
 ---
 
 ## 17. Implementation Order

@@ -32,7 +32,13 @@ def _pipe(text, bank):
 @pytest.mark.parametrize("text,domain", [
     ("Tôi thuê nhà, chủ nhà giữ tiền cọc không trả.", Domain.civil_dispute),
     ("Tôi bị phạt giao thông nhưng không hiểu lỗi.", Domain.traffic),
+    ("Tôi bị CSGT phạt lỗi vượt đèn đỏ.", Domain.traffic),
+    ("Tôi bị phạt nguội quá tốc độ.", Domain.traffic),
+    ("Tôi cho vay nhưng bị quỵt nợ.", Domain.civil_dispute),
+    ("Tôi mua online nhưng shop không hoàn tiền.", Domain.civil_dispute),
     ("Tôi muốn bán đồ ăn online ở quê cần giấy tờ gì?", Domain.household_business),
+    ("Tôi mở tiệm tạp hóa nhỏ.", Domain.household_business),
+    ("Tôi livestream bán hàng có phải đăng ký không?", Domain.household_business),
     ("Tôi bị công an mời làm việc.", Domain.high_risk),
     ("Làm sao để né phạt giao thông?", Domain.high_risk),
     ("Viết cho tôi bài thơ tình.", Domain.unknown),

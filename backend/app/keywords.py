@@ -15,15 +15,20 @@ _RAW = {
         "no tien", "không trả", "mua hàng", "shop không giao", "tranh chấp",
         "bồi thường", "chứng từ", "biên nhận",
         "chủ trọ", "phòng trọ", "tiền nhà", "chậm trả", "trả tiền nhà",
+        "cho vay", "quỵt nợ", "quỵt tiền", "bùng nợ",
+        "đặt hàng", "hoàn tiền", "mua online",
     ],
     "traffic": [
         "giao thông", "biên bản", "giấy phạt", "phạt xe", "bằng lái",
         "đăng ký xe", "vi phạm giao thông", "cảnh sát giao thông", "tai nạn giao thông",
+        "csgt", "vượt đèn đỏ", "đèn đỏ", "phạt nguội", "quá tốc độ", "nồng độ cồn",
     ],
     "household_business": [
         "hộ kinh doanh", "bán đồ ăn online", "mở quán", "bán hàng online",
         "đăng ký kinh doanh", "giấy phép", "an toàn thực phẩm", "shop nhỏ",
         "kinh doanh tại nhà", "kinh doanh nhỏ",
+        "mở tiệm", "mở shop", "buôn bán", "kinh doanh online",
+        "bán đồ ăn", "vệ sinh thực phẩm", "bán online", "livestream",
     ],
     "administrative": [
         "thủ tục", "hồ sơ", "nộp hồ sơ", "cần giấy tờ gì", "cơ quan nào",
